@@ -1,32 +1,30 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from ethosapi.models import Profile
+from ethosapi.models import Log
 from ethosapi.models import User
+from ethosapi.models import Profile
+from datetime import date
 
-class ProfileView(ViewSet):
-    """Ethos profile view"""
+class LogView(ViewSet):
+    """Ethos log view"""
 
-    def retrieve(self, request, pk): # returns a single profile by id
+    def retrieve(self, request, pk): # returns a single Log by id # TODO:
         try:
-          profile = Profile.objects.get(pk=pk) 
-          serializer = ProfileSerializer(profile)
+          log = Log.objects.get(pk=pk) 
+          serializer = LogSerializer(log)
           return Response(serializer.data)
-        except Profile.DoesNotExist as ex: # returns 404 if profile doesnt exist
-          return Response({'message': 'profile not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Log.DoesNotExist as ex: # returns 404 if log doesnt exist
+          return Response({'message': 'log not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    def list(self, request): # returns all profiles in database 
-        profiles = Profile.objects.all()
+    def list(self, request): # returns all profiles in database # TODO: 
+        logs = Log.objects.all()
         
-        creator_id = request.query_params.get('creator_id', None)
-        if creator_id is not None:
-            profiles =  profiles.filter(creator_id=creator_id)
-      
-        circle = request.query_params.get('circle', None)
-        if circle is not None:
-            profiles =  profiles.filter(circle_id=circle) # TODO: test - will this work if the profile has multiple circles?
+        profile_id = request.query_params.get('profile_id', None)
+        if profile_id is not None:
+            profiles =  profiles.filter(profile_id=profile_id)
             
-        serializer = ProfileSerializer(profiles, many=True)
+        serializer = LogSerializer(logs, many=True)
         return Response(serializer.data)
     
     def create(self, request): 
@@ -35,17 +33,20 @@ class ProfileView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
+        profile = Profile.objects.get(id=request.data["profile_id"])
         creator = User.objects.get(id=request.data["creator_id"])
-        
-        # TODO: add create initial score logic
-        # TODO: add circles logic
+        current_date = date.today()
 
-        profile = Profile.objects.create(
-            name=request.data["name"],
-            bio=request.data["bio"],
+        log = Log.objects.create(
+            score_impact=request.data["score_impact"],
+            title=request.data["title"],
+            description=request.data["description"],
+            event_date=request.data["event_date"],
             creator_id=creator,
+            profile_id=profile,
+            log_date = current_date,
         )
-        serializer = ProfileSerializer(profile)
+        serializer = LogSerializer(log)
         return Response(serializer.data)
     
     def update(self, request, pk): # TODO:
@@ -74,9 +75,8 @@ class ProfileView(ViewSet):
         
 
 
-class ProfileSerializer(serializers.ModelSerializer):
+class LogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Profile
-        fields = ('id', 'creator_id', 'bio', 'name')
-        # fields = ('id', 'creator_id', 'bio', 'name', 'score_id', 'circles')
+        model = Log
+        fields = ('id', 'creator_id', 'title', 'description', 'event_date', 'profile_id', 'score_impact')
         # TODO: add depth (in exposing get requests at bottom)
