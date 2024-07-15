@@ -15,7 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include
+from ethosapi.views import register_user, check_user
+from django.contrib import admin
+from ethosapi.views.user import UserView
+from rest_framework import routers
+from ethosapi.views import ProfileView
+
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'users', UserView, 'user')
+router.register(r'profiles', ProfileView, 'profile')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include(router.urls)),
+    path('register', register_user),
+    path('checkuser', check_user),
 ]
