@@ -6,8 +6,8 @@ from .score import Score
 
 class Log(models.Model):
 
-  creator_id = models.ForeignKey(User, on_delete=models.CASCADE)
-  profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+  creator = models.ForeignKey(User, on_delete=models.CASCADE)
+  profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
   score_impact = models.CharField(max_length=50)
   title = models.CharField(max_length=50)
   description = models.CharField(max_length=50)
