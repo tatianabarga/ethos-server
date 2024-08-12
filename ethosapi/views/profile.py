@@ -1,8 +1,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from ethosapi.models import Profile
-from ethosapi.models import User
+from ethosapi.models import Profile, User, Circle, CircleProfile
 
 class ProfileView(ViewSet):
     """Ethos profile view"""
@@ -18,13 +17,13 @@ class ProfileView(ViewSet):
     def list(self, request): # returns all profiles in database 
         profiles = Profile.objects.all()
         
-        creator_id = request.query_params.get('creator_id', None)
+        creator_id = request.query_params.get('creator', None)
         if creator_id is not None:
-            profiles =  profiles.filter(creator_id=creator_id)
+            profiles =  profiles.filter(creator=creator_id)
       
         circle = request.query_params.get('circle', None)
         if circle is not None:
-            profiles =  profiles.filter(circle_id=circle) # TODO: test - will this work if the profile has multiple circles?
+            profiles =  profiles.filter(circle=circle) # TODO: test - will this work if the profile has multiple circles?
             
         serializer = ProfileSerializer(profiles, many=True)
         return Response(serializer.data)
@@ -35,7 +34,7 @@ class ProfileView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
-        creator = User.objects.get(id=request.data["creator_id"])
+        creator = User.objects.get(id=request.data["creator"])
         
         # TODO: add create initial score logic
         # TODO: add circles logic
@@ -43,9 +42,26 @@ class ProfileView(ViewSet):
         profile = Profile.objects.create(
             name=request.data["name"],
             bio=request.data["bio"],
-            creator_id=creator,
+            creator=creator,
         )
         serializer = ProfileSerializer(profile)
+        
+        if serializer.is_valid():
+            profile = serializer.save()
+            circles = request.data.get('circles', [])
+            if not isinstance(circles, list):
+                circles = [circles]
+                
+            for circle_id in circles:
+                try:
+                    circle = Circle.objects.get(pk=circle_id)
+                    CircleProfile.objects.create(
+                        circle = circle,
+                        profile = profile,
+                    ) 
+                except Circle.DoesNotExist:
+                    return Response({'error': f'Circle with id {circle_id} does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+            
         return Response(serializer.data)
     
     def update(self, request, pk): # TODO:
@@ -77,6 +93,6 @@ class ProfileView(ViewSet):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('id', 'creator_id', 'bio', 'name')
+        fields = ('id', 'creator', 'bio', 'name', 'circles')
         # fields = ('id', 'creator_id', 'bio', 'name', 'score_id', 'circles')
         # TODO: add depth (in exposing get requests at bottom)

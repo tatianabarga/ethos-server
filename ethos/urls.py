@@ -22,11 +22,13 @@ from ethosapi.views.user import UserView
 from rest_framework import routers
 from ethosapi.views import ProfileView
 from ethosapi.views import LogView
+from ethosapi.views import CircleView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'users', UserView, 'user')
 router.register(r'profiles', ProfileView, 'profile')
 router.register(r'logs', LogView, 'log')
+router.register(r'circles', CircleView, 'circle')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
