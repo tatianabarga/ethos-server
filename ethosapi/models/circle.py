@@ -1,6 +1,8 @@
 from django.db import models
+from .user import User
 
 
 class Circle(models.Model):
 
-  creator_id = models.CharField(max_length=50)
+  creator = models.ForeignKey(User, on_delete=models.CASCADE)
+  name = models.CharField(max_length=50)

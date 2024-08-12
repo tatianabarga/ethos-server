@@ -5,5 +5,5 @@ from .profile import Profile
 
 class CircleProfile(models.Model):
 
-  circle_id = models.ForeignKey(Circle, on_delete=models.CASCADE)
-  profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+  circle = models.ForeignKey(Circle, on_delete=models.CASCADE)
+  profile = models.ForeignKey(Profile, on_delete=models.CASCADE)

@@ -20,9 +20,9 @@ class LogView(ViewSet):
     def list(self, request): # returns all profiles in database # TODO: 
         logs = Log.objects.all()
         
-        profile_id = request.query_params.get('profile_id', None)
-        if profile_id is not None:
-            profiles =  profiles.filter(profile_id=profile_id)
+        profiles = request.query_params.get('profile', None)
+        if profiles is not None:
+            logs =  logs.filter(profile_id=profiles)
             
         serializer = LogSerializer(logs, many=True)
         return Response(serializer.data)
