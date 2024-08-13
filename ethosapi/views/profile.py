@@ -6,7 +6,8 @@ from ethosapi.models import Profile, User, Circle, CircleProfile
 class ProfileView(ViewSet):
     """Ethos profile view"""
 
-    def retrieve(self, request, pk): # returns a single profile by id
+    def retrieve(self, request, pk): 
+        """returns a single profile by id"""
         try:
           profile = Profile.objects.get(pk=pk) 
           serializer = ProfileSerializer(profile)
@@ -14,7 +15,8 @@ class ProfileView(ViewSet):
         except Profile.DoesNotExist as ex: # returns 404 if profile doesnt exist
           return Response({'message': 'profile not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    def list(self, request): # returns all profiles in database 
+    def list(self, request): 
+        """returns all profiles in database with options to filter by creator or circle using query"""
         profiles = Profile.objects.all()
         
         creator_id = request.query_params.get('creator', None)
@@ -23,7 +25,7 @@ class ProfileView(ViewSet):
       
         circle = request.query_params.get('circle', None)
         if circle is not None:
-            profiles =  profiles.filter(circle=circle) # TODO: test - will this work if the profile has multiple circles?
+            profiles =  profiles.filter(circle=circle)
             
         serializer = ProfileSerializer(profiles, many=True)
         return Response(serializer.data)
@@ -37,7 +39,6 @@ class ProfileView(ViewSet):
         creator = User.objects.get(id=request.data["creator"])
         
         # TODO: add create initial score logic
-        # TODO: add circles logic
 
         # profile = Profile.objects.create(
         #     name=request.data["name"],

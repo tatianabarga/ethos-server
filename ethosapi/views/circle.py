@@ -6,24 +6,18 @@ from ethosapi.models import User, Circle
 class CircleView(ViewSet):
     """Ethos profile view"""
 
-    def retrieve(self, request, pk): # returns a single profile by id
+    def retrieve(self, request, pk): 
+        """returns a single circle by id"""
         try:
-          profile = Profile.objects.get(pk=pk) 
-          serializer = ProfileSerializer(profile)
+          profile = Circle.objects.get(pk=pk) 
+          serializer = CircleSerializer(profile)
           return Response(serializer.data)
-        except Profile.DoesNotExist as ex: # returns 404 if profile doesnt exist
-          return Response({'message': 'profile not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Circle.DoesNotExist as ex: # returns 404 if profile doesnt exist
+          return Response({'message': 'circle not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    def list(self, request): # returns all profiles in database 
+    def list(self, request):
+        """returns all circles in database"""
         circles = Circle.objects.all()
-        
-        # creator_id = request.query_params.get('creator', None)
-        # if creator_id is not None:
-        #     profiles =  profiles.filter(creator=creator_id)
-      
-        # circle = request.query_params.get('circle', None)
-        # if circle is not None:
-        #     profiles =  profiles.filter(circle=circle) # TODO: test - will this work if the profile has multiple circles?
             
         serializer = CircleSerializer(circles, many=True)
         return Response(serializer.data)
@@ -36,16 +30,10 @@ class CircleView(ViewSet):
         """
         creator = User.objects.get(pk=request.data["creator"])
         print(creator.name)
-
-        # circle = Circle.objects.create(
-        #     name=request.data["name"],
-        #     creator=creator,
-        # )
         
         serializer = CircleSerializer(data=request.data)
         
         if serializer.is_valid():
-          circle = serializer.save()
           return Response(serializer.data)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
