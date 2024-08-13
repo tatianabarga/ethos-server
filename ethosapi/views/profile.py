@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from ethosapi.models import Profile, User, Circle, CircleProfile
+from ethosapi.models import Profile, User, Circle, CircleProfile, Score
 
 class ProfileView(ViewSet):
     """Ethos profile view"""
@@ -37,6 +37,7 @@ class ProfileView(ViewSet):
             Response -- JSON serialized game instance
         """
         creator = User.objects.get(id=request.data["creator"])
+        # score = request.query_params.get('score', None)
         
         # TODO: add create initial score logic
         
@@ -47,6 +48,14 @@ class ProfileView(ViewSet):
             circles = request.data.get('circles', [])
             if not isinstance(circles, list):
                 circles = [circles]
+                
+            # if score is not None:
+            #     Score.objects.create(
+            #         score = score,
+            #         profile = profile
+            #     )
+                
+            # score may need to be created seperately using form on frontend
                 
             for circle_id in circles:
                 try:
@@ -90,5 +99,4 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('id', 'creator', 'bio', 'name', 'circles')
-        # fields = ('id', 'creator_id', 'bio', 'name', 'score_id', 'circles')
         # TODO: add depth (in exposing get requests at bottom)

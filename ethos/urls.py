@@ -20,15 +20,14 @@ from ethosapi.views import register_user, check_user
 from django.contrib import admin
 from ethosapi.views.user import UserView
 from rest_framework import routers
-from ethosapi.views import ProfileView
-from ethosapi.views import LogView
-from ethosapi.views import CircleView
+from ethosapi.views import ProfileView, LogView, CircleView, ScoreView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'users', UserView, 'user')
 router.register(r'profiles', ProfileView, 'profile')
 router.register(r'logs', LogView, 'log')
 router.register(r'circles', CircleView, 'circle')
+router.register(r'scores', ScoreView, 'score')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
