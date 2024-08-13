@@ -19,11 +19,11 @@ class ProfileView(ViewSet):
         
         creator_id = request.query_params.get('creator', None)
         if creator_id is not None:
-            profiles =  profiles.filter(creator=creator_id)
+            profiles =  Profile.objects.filter(creator=creator_id)
       
         circle = request.query_params.get('circle', None)
         if circle is not None:
-            profiles =  profiles.filter(circle=circle) # TODO: test - will this work if the profile has multiple circles?
+            profiles =  profiles.filter(circleprofile__circle_id=circle) # TODO: test - will this work if the profile has multiple circles?
             
         serializer = ProfileSerializer(profiles, many=True)
         return Response(serializer.data)

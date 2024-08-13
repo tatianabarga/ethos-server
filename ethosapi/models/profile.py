@@ -10,4 +10,4 @@ class Profile(models.Model):
   bio = models.CharField(max_length=50)
   name = models.CharField(max_length=50)
   circles = models.ManyToManyField(Circle, through='CircleProfile', related_name='profile')
-  # score_id = models.ForeignKey(Score, on_delete=models.CASCADE)
+  # score = models.ForeignKey(Score, on_delete=models.CASCADE)
