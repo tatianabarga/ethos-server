@@ -1,6 +1,5 @@
 from django.db import models
 from .user import User
-from .score import Score
 from .circle import Circle
 
 
@@ -10,4 +9,3 @@ class Profile(models.Model):
   bio = models.CharField(max_length=50)
   name = models.CharField(max_length=50)
   circles = models.ManyToManyField(Circle, through='CircleProfile', related_name='profile')
-  # score = models.ForeignKey(Score, on_delete=models.CASCADE)
