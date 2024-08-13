@@ -34,13 +34,15 @@ class CircleView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
-        creator = User.objects.get(id=request.data["creator"])
+        creator = User.objects.get(pk=request.data["creator"])
+        print(creator.name)
 
-        circle = Circle.objects.create(
-            name=request.data["name"],
-            creator=creator,
-        )
-        serializer = CircleSerializer(circle)
+        # circle = Circle.objects.create(
+        #     name=request.data["name"],
+        #     creator=creator,
+        # )
+        
+        serializer = CircleSerializer(data=request.data)
         
         if serializer.is_valid():
           circle = serializer.save()
