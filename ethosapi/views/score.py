@@ -6,23 +6,25 @@ from ethosapi.models import Score, Profile
 class ScoreView(ViewSet):
     """Ethos log view"""
 
-    def retrieve(self, request, pk): # returns a single Log by id # TODO:
-        try:
-          log = Log.objects.get(pk=pk) 
-          serializer = LogSerializer(log)
-          return Response(serializer.data)
-        except Log.DoesNotExist as ex: # returns 404 if log doesnt exist
-          return Response({'message': 'log not found'}, status=status.HTTP_404_NOT_FOUND)
-
-    def list(self, request): # returns all profiles in database # TODO: 
-        scores = Score.objects.all()
-        
-        # profiles = request.query_params.get('profile', None)
-        # if profiles is not None:
-        #     logs =  logs.filter(profile_id=profiles)
-            
-        serializer = ScoreSerializer(scores, many=True)
+    def retrieve(self, request, pk): 
+      """returns a single score by id"""
+      try:
+        score = Score.objects.get(pk=pk) 
+        serializer = ScoreSerializer(score)
         return Response(serializer.data)
+      except Score.DoesNotExist as ex: # returns 404 if score doesnt exist
+        return Response({'message': 'score not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def list(self, request):
+      """returns all scores in database with option to filter by profile"""
+      scores = Score.objects.all()
+      
+      profile = request.query_params.get('profile', None)
+      if profile is not None:
+          scores =  scores.filter(profile_id=profile)
+          
+      serializer = ScoreSerializer(scores, many=True)
+      return Response(serializer.data)
     
     def create(self, request): 
         """Handle POST operations
