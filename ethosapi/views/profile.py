@@ -25,7 +25,7 @@ class ProfileView(ViewSet):
       
         circle = request.query_params.get('circle', None)
         if circle is not None:
-            profiles =  profiles.filter(circle=circle)
+            profiles =  profiles.filter(circleprofile__circle_id=circle)
             
         serializer = ProfileSerializer(profiles, many=True)
         return Response(serializer.data)
@@ -39,12 +39,6 @@ class ProfileView(ViewSet):
         creator = User.objects.get(id=request.data["creator"])
         
         # TODO: add create initial score logic
-
-        # profile = Profile.objects.create(
-        #     name=request.data["name"],
-        #     bio=request.data["bio"],
-        #     creator=creator,
-        # )
         
         serializer = ProfileSerializer(data=request.data)
         

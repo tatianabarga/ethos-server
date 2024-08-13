@@ -19,6 +19,10 @@ class CircleView(ViewSet):
         """returns all circles in database"""
         circles = Circle.objects.all()
             
+        profile = request.query_params.get('profile', None)
+        if profile is not None:
+            circles =  circles.filter(circleprofile__profile_id=profile)
+            
         serializer = CircleSerializer(circles, many=True)
         return Response(serializer.data)
     
