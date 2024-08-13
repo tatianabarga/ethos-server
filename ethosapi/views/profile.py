@@ -39,12 +39,6 @@ class ProfileView(ViewSet):
         creator = User.objects.get(id=request.data["creator"])
         
         # TODO: add create initial score logic
-
-        # profile = Profile.objects.create(
-        #     name=request.data["name"],
-        #     bio=request.data["bio"],
-        #     creator=creator,
-        # )
         
         serializer = ProfileSerializer(data=request.data)
         
