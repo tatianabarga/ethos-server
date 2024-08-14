@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers, status
 from ethosapi.models import Profile, User, Circle, CircleProfile, Score
 
@@ -39,8 +40,6 @@ class ProfileView(ViewSet):
         creator = User.objects.get(id=request.data["creator"])
         # score = request.query_params.get('score', None)
         
-        # TODO: add create initial score logic
-        
         serializer = ProfileSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -75,16 +74,12 @@ class ProfileView(ViewSet):
         Returns:
             Response -- Empty body with 204 status code
         """
-
-        game = Game.objects.get(pk=pk)
-        game.title = request.data["title"]
-        game.maker = request.data["maker"]
-        game.number_of_players = request.data["numberOfPlayers"]
-        game.skill_level = request.data["skillLevel"]
-
-        game_type = GameType.objects.get(pk=request.data["gameType"])
-        game.game_type = game_type
-        game.save()
+        
+        profile = Profile.objects.get(pk=pk)
+        profile.bio = request.data["bio"]
+        profile.name = request.data["name"]
+        # profile.circles = request.data["circles"]
+        profile.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
