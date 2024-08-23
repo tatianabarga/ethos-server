@@ -2,7 +2,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import serializers, status
-from ethosapi.models import Profile, User, Circle, CircleProfile, Score
+from ethosapi.models import Profile, User, Circle, CircleProfile, Score, Log
 
 class ProfileView(ViewSet):
     """Ethos profile view"""
@@ -81,7 +81,6 @@ class ProfileView(ViewSet):
         
         joins = CircleProfile.objects.all()
         joins = joins.filter(profile_id=pk)
-        # get this to print better?
         
         old_circles = list(profile.circles.all())
         old_circle_ids = []
@@ -92,16 +91,11 @@ class ProfileView(ViewSet):
         
         new_circles = request.data["circles"]
         
-        # if old_circle_ids == new_circles: # if the circles field hasn't changed
-        #     profile.save()
         if old_circle_ids != new_circles: # if the circles field has changed
-        # else: # if it has
             for circle in old_circle_ids: # find any deleted circles
                 if circle not in new_circles:
                     # pull instance from join table and delete 
                     joins.filter(circle_id=circle).delete()
-                    # join = joins.filter(circle_id=circle) # not sure about having two params here
-                    # join.delete()
                 
             for circle in new_circles: # find any added circles
                 if circle not in old_circle_ids:
@@ -114,14 +108,22 @@ class ProfileView(ViewSet):
                     
             profile.circles.set(new_circles)
         profile.save()
-        
-        # profile.circles = request.data["circles"]
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     def destroy(self, request, pk): # TODO:
-        game = Game.objects.get(pk=pk)
-        game.delete()
+        profile = Profile.objects.get(pk=pk)
+        # TODO: delete score
+        
+        joins = CircleProfile.objects.all()
+        joins = joins.filter(profile_id=pk)
+        joins.delete()# delete joins for profile from circleprofile table
+        
+        logs = Log.objects.all()
+        logs = logs.filter(profile_id=pk)
+        logs.delete() # delete logs for profile
+        
+        profile.delete() #delete profile itself
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 

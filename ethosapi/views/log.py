@@ -33,8 +33,8 @@ class LogView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
-        profile = Profile.objects.get(id=request.data["profile_id"])
-        creator = User.objects.get(id=request.data["creator_id"])
+        profile = Profile.objects.get(id=request.data["profile"])
+        creator = User.objects.get(id=request.data["creator"])
         current_date = date.today()
 
         log = Log.objects.create(
@@ -42,8 +42,8 @@ class LogView(ViewSet):
             title=request.data["title"],
             description=request.data["description"],
             event_date=request.data["event_date"],
-            creator_id=creator,
-            profile_id=profile,
+            creator=creator,
+            profile=profile,
             log_date = current_date,
         )
         serializer = LogSerializer(log)
@@ -78,5 +78,5 @@ class LogView(ViewSet):
 class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
-        fields = ('id', 'creator_id', 'title', 'description', 'event_date', 'profile_id', 'score_impact')
+        fields = ('id', 'creator', 'title', 'description', 'event_date', 'profile', 'score_impact')
         # TODO: add depth (in exposing get requests at bottom)
