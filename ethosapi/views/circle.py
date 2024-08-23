@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from ethosapi.models import User, Circle
+from ethosapi.models import User, Circle, CircleProfile, Profile
 
 class CircleView(ViewSet):
     """Ethos profile view"""
@@ -65,7 +65,19 @@ class CircleView(ViewSet):
     
     def destroy(self, request, pk): # TODO:
         circle = Circle.objects.get(pk=pk)
-        circle.delete()
+        
+        joins = CircleProfile.objects.all()
+        joins = joins.filter(circle_id=pk)
+        joins.delete() # delete circle profile joins
+        
+        # edit circle property on related profiles
+        
+        
+        # TODO: delete circle user joins
+        
+        # TODO: circle property on related users
+        
+        circle.delete() # delete circle itself
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
