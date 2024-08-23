@@ -78,8 +78,44 @@ class ProfileView(ViewSet):
         profile = Profile.objects.get(pk=pk)
         profile.bio = request.data["bio"]
         profile.name = request.data["name"]
-        # profile.circles = request.data["circles"]
+        
+        joins = CircleProfile.objects.all()
+        joins = joins.filter(profile_id=pk)
+        # get this to print better?
+        
+        old_circles = list(profile.circles.all())
+        old_circle_ids = []
+         
+        for circle in old_circles:
+            id = circle.id
+            old_circle_ids.append(id)
+        
+        new_circles = request.data["circles"]
+        
+        # if old_circle_ids == new_circles: # if the circles field hasn't changed
+        #     profile.save()
+        if old_circle_ids != new_circles: # if the circles field has changed
+        # else: # if it has
+            for circle in old_circle_ids: # find any deleted circles
+                if circle not in new_circles:
+                    # pull instance from join table and delete 
+                    joins.filter(circle_id=circle).delete()
+                    # join = joins.filter(circle_id=circle) # not sure about having two params here
+                    # join.delete()
+                
+            for circle in new_circles: # find any added circles
+                if circle not in old_circle_ids:
+                    # create instance in join table 
+                    new_circle = Circle.objects.get(pk=circle)
+                    CircleProfile.objects.create(
+                        circle = new_circle,
+                        profile = profile,
+                    ) 
+                    
+            profile.circles.set(new_circles)
         profile.save()
+        
+        # profile.circles = request.data["circles"]
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
