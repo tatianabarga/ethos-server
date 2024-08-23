@@ -92,26 +92,28 @@ class ProfileView(ViewSet):
         
         new_circles = request.data["circles"]
         
-        if old_circle_ids == new_circles: # if the circles field hasn't changed
-            profile.save()
-        else: # if it has
+        # if old_circle_ids == new_circles: # if the circles field hasn't changed
+        #     profile.save()
+        if old_circle_ids != new_circles: # if the circles field has changed
+        # else: # if it has
             for circle in old_circle_ids: # find any deleted circles
                 if circle not in new_circles:
                     # pull instance from join table and delete 
-                    join = joins.filter(circleprofile__circle_id=circle) # not sure about having two params here
-                    join.delete()
+                    joins.filter(circle_id=circle).delete()
+                    # join = joins.filter(circle_id=circle) # not sure about having two params here
+                    # join.delete()
                 
             for circle in new_circles: # find any added circles
-                if circle not in old_circles:
+                if circle not in old_circle_ids:
                     # create instance in join table 
-                    new_circle = Circle.objects.get(circle)
+                    new_circle = Circle.objects.get(pk=circle)
                     CircleProfile.objects.create(
                         circle = new_circle,
                         profile = profile,
                     ) 
                     
-            profile.circles = new_circles
-            profile.save()
+            profile.circles.set(new_circles)
+        profile.save()
         
         # profile.circles = request.data["circles"]
 
