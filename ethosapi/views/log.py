@@ -9,7 +9,7 @@ from datetime import date
 class LogView(ViewSet):
     """Ethos log view"""
 
-    def retrieve(self, request, pk): # returns a single Log by id # TODO:
+    def retrieve(self, request, pk): # returns a single Log by id 
         try:
           log = Log.objects.get(pk=pk) 
           serializer = LogSerializer(log)
@@ -17,7 +17,7 @@ class LogView(ViewSet):
         except Log.DoesNotExist as ex: # returns 404 if log doesnt exist
           return Response({'message': 'log not found'}, status=status.HTTP_404_NOT_FOUND)
 
-    def list(self, request): # returns all profiles in database # TODO: 
+    def list(self, request): # returns all profiles in database 
         logs = Log.objects.all()
         
         profiles = request.query_params.get('profile', None)
@@ -56,23 +56,13 @@ class LogView(ViewSet):
             Response -- Empty body with 204 status code
         """
 
-        game = Game.objects.get(pk=pk)
-        game.title = request.data["title"]
-        game.maker = request.data["maker"]
-        game.number_of_players = request.data["numberOfPlayers"]
-        game.skill_level = request.data["skillLevel"]
+        log = Log.objects.get(pk=pk)
+        log.title = request.data["title"]
+        log.description = request.data["description"]
+        log.score_impact = request.data["score_impact"]
+        log.save()
 
-        game_type = GameType.objects.get(pk=request.data["gameType"])
-        game.game_type = game_type
-        game.save()
-
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
-    
-    def destroy(self, request, pk): # TODO:
-        game = Game.objects.get(pk=pk)
-        game.delete()
-        return Response(None, status=status.HTTP_204_NO_CONTENT)
-        
+        return Response(None, status=status.HTTP_204_NO_CONTENT)    
 
 
 class LogSerializer(serializers.ModelSerializer):
