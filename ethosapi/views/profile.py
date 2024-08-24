@@ -60,7 +60,7 @@ class ProfileView(ViewSet):
             
         return Response(serializer.data)
     
-    def update(self, request, pk): # TODO:
+    def update(self, request, pk):
         """Handle PUT requests for a game
 
         Returns:
