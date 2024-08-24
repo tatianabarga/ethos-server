@@ -17,4 +17,8 @@ CREATE TABLE circle (
 
 ALTER TABLE circle RENAME TO ethosapi_circle;
 
+DELETE FROM ethosapi_circleuser
+WHERE id = 2;
+
+
 

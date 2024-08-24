@@ -61,12 +61,7 @@ class ScoreView(ViewSet):
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     def destroy(self, request, pk): # TODO:
-        # profile = Profile.objects.get(pk=pk)
-        # # TODO: delete score
-        # # delete joins for profile from circleprofile table
-        # joins
-        # # delete logs for profile
-        # profile.delete() #delete profile itself
+        
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
