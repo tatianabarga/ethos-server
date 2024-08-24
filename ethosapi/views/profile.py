@@ -47,15 +47,7 @@ class ProfileView(ViewSet):
             circles = request.data.get('circles', [])
             if not isinstance(circles, list):
                 circles = [circles]
-                
-            # if score is not None:
-            #     Score.objects.create(
-            #         score = score,
-            #         profile = profile
-            #     )
-                
-            # score may need to be created seperately using form on frontend
-                
+             
             for circle_id in circles:
                 try:
                     circle = Circle.objects.get(pk=circle_id)
