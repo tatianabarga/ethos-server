@@ -41,27 +41,22 @@ class ScoreView(ViewSet):
         serializer = ScoreSerializer(score_obj)
         return Response(serializer.data)
     
-    def update(self, request, pk): # TODO:
-        """Handle PUT requests for a game
+    def update(self, request, pk):
+        """Handle PUT requests for a score
 
         Returns:
             Response -- Empty body with 204 status code
         """
 
-        game = Game.objects.get(pk=pk)
-        game.title = request.data["title"]
-        game.maker = request.data["maker"]
-        game.number_of_players = request.data["numberOfPlayers"]
-        game.skill_level = request.data["skillLevel"]
-
-        game_type = GameType.objects.get(pk=request.data["gameType"])
-        game.game_type = game_type
-        game.save()
+        score = Score.objects.get(pk=pk)
+        score.score = request.data["score"]
+        score.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
-    def destroy(self, request, pk): # TODO:
-        
+    def destroy(self, request, pk):
+        score = Score.objects.get(pk=pk)
+        score.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
