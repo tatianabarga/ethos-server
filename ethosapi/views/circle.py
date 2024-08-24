@@ -49,7 +49,7 @@ class CircleView(ViewSet):
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def update(self, request, pk): # TODO:
+    def update(self, request, pk):
         """Handle PUT requests for a circle
 
         Returns:
@@ -62,7 +62,7 @@ class CircleView(ViewSet):
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
-    def destroy(self, request, pk): # TODO:
+    def destroy(self, request, pk):
         circle_id = request.query_params.get('id', None)
         circle = Circle.objects.get(pk=pk)
         

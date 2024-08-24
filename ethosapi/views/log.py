@@ -49,7 +49,7 @@ class LogView(ViewSet):
         serializer = LogSerializer(log)
         return Response(serializer.data)
     
-    def update(self, request, pk): # TODO:
+    def update(self, request, pk):
         """Handle PUT requests for a game
 
         Returns:
@@ -69,4 +69,3 @@ class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
         fields = ('id', 'creator', 'title', 'description', 'event_date', 'profile', 'score_impact')
-        # TODO: add depth (in exposing get requests at bottom)

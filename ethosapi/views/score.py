@@ -65,4 +65,3 @@ class ScoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Score
         fields = ('id', 'score', 'profile')
-        # TODO: add depth (in exposing get requests at bottom)

@@ -110,7 +110,7 @@ class ProfileView(ViewSet):
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
-    def destroy(self, request, pk): # TODO:
+    def destroy(self, request, pk):
         profile = Profile.objects.get(pk=pk)
         
         score = Score.objects.get(profile=pk)
@@ -133,4 +133,3 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('id', 'creator', 'bio', 'name', 'circles')
-        # TODO: add depth (in exposing get requests at bottom)
