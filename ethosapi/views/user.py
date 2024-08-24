@@ -41,7 +41,7 @@ class UserView(ViewSet):
 
     @action(detail=True, methods=['patch'], url_path='remove-circle/(?P<circle_id>[^/.]+)')
     def remove_circle(self, request, pk, circle_id):
-        join = CircleUser.objects.get(user_id=pk, circle_id=circle_id) #idk about sending two params
+        join = CircleUser.objects.get(user_id=pk, circle_id=circle_id)
         join.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
