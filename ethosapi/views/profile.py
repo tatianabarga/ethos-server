@@ -116,7 +116,6 @@ class ProfileView(ViewSet):
         score = Score.objects.get(profile=pk)
         score.delete() # delete score
         
-        
         joins = CircleProfile.objects.all()
         joins = joins.filter(profile_id=pk)
         joins.delete()# delete joins for profile from circleprofile table

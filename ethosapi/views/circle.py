@@ -50,21 +50,15 @@ class CircleView(ViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def update(self, request, pk): # TODO:
-        """Handle PUT requests for a game
+        """Handle PUT requests for a circle
 
         Returns:
             Response -- Empty body with 204 status code
         """
 
-        game = Game.objects.get(pk=pk)
-        game.title = request.data["title"]
-        game.maker = request.data["maker"]
-        game.number_of_players = request.data["numberOfPlayers"]
-        game.skill_level = request.data["skillLevel"]
-
-        game_type = GameType.objects.get(pk=request.data["gameType"])
-        game.game_type = game_type
-        game.save()
+        circle = Circle.objects.get(pk=pk)
+        circle.name = request.data["name"]
+        circle.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
