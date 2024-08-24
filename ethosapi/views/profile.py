@@ -38,16 +38,23 @@ class ProfileView(ViewSet):
             Response -- JSON serialized game instance
         """
         creator = User.objects.get(id=request.data["creator"])
-        # score = request.query_params.get('score', None)
         
         serializer = ProfileSerializer(data=request.data)
+        
         
         if serializer.is_valid():
             profile = serializer.save()
             circles = request.data.get('circles', [])
+            score = request.data.get('score', None)
             if not isinstance(circles, list):
                 circles = [circles]
-             
+                
+            if score is not None:
+                Score.objects.create(
+                    score = score,
+                    profile = profile,
+                ) 
+                
             for circle_id in circles:
                 try:
                     circle = Circle.objects.get(pk=circle_id)
