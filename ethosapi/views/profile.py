@@ -112,7 +112,10 @@ class ProfileView(ViewSet):
     
     def destroy(self, request, pk): # TODO:
         profile = Profile.objects.get(pk=pk)
-        # TODO: delete score
+        
+        score = Score.objects.get(profile=pk)
+        score.delete() # delete score
+        
         
         joins = CircleProfile.objects.all()
         joins = joins.filter(profile_id=pk)
