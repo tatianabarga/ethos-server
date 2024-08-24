@@ -64,14 +64,22 @@ class CircleView(ViewSet):
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     def destroy(self, request, pk): # TODO:
+        circle_id = request.query_params.get('id', None)
         circle = Circle.objects.get(pk=pk)
         
         joins = CircleProfile.objects.all()
         joins = joins.filter(circle_id=pk)
+        
+        # edit circle property on related profiles:
+        profiles = [join.profile_id for join in joins]
+        
+        for profile_id in profiles:
+            profile = Profile.objects.get(pk=profile_id)
+            profile_circles = profile.circles
+            profile_circles.remove(circle_id)
+            profile.save() 
+        
         joins.delete() # delete circle profile joins
-        
-        # edit circle property on related profiles
-        
         
         # TODO: delete circle user joins
         
