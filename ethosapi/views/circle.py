@@ -20,8 +20,13 @@ class CircleView(ViewSet):
         circles = Circle.objects.all()
             
         profile = request.query_params.get('profile', None)
+        user = request.query_params.get('user', None)
+        
         if profile is not None:
             circles =  circles.filter(circleprofile__profile_id=profile)
+            
+        if user is not None:
+            circles =  circles.filter(circleuser__user_id=user)
             
         serializer = CircleSerializer(circles, many=True)
         return Response(serializer.data)
