@@ -4,6 +4,7 @@
 
 **Ethos** is an application designed to track and evaluate experiences and opinions related to corporations, politicians, contractors, individuals, and more. It provides users with a versatile platform to manage and share feedback, aiding in informed decision-making and transparency.
 
+
 ## Features
 
 - **Profile Management**: Create and manage profiles for entities such as contractors, corporations, and individuals.
@@ -13,6 +14,7 @@
 - **Experience Logging**: Document experiences with profiles, including descriptions, dates, and score impacts.
 
 - **Circles**: Organize profiles into 'circles,' allowing shared access and collaboration on profiles and logs.
+
 
 ## User Description
 - Use Case: Corporate users leverage Ethos to track and evaluate their experiences with contractors and service providers. By documenting and reviewing feedback, they can make informed decisions on whether to continue working with these entities or select new ones.
