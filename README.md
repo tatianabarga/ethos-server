@@ -64,7 +64,7 @@
      ```
 
 6. **Configuration**:
-   Create a `.env` file in the root directory and configure the necessary environment variables. Refer to `.env.example` for a sample configuration.
+   Create a `.env` file in the root directory and configure the necessary environment variables. 
 
 7. **Run the Server**:
    ```bash
