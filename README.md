@@ -41,10 +41,14 @@
 
 2. **Set Up a Virtual Environment**:
    ```bash
-   python -m venv venv
+   pipenv shell
    ```
 
-3. **Activate the Virtual Environment**:
+3. **Install these third-party packages for use in your project**:
+
+    ```bashpipenv install django=='4.1.3' autopep8=='2.0.0' pylint=='2.15.5' djangorestframework=='3.14.0' django-cors-headers=='3.13.0' pylint-django=='2.5.3'```
+
+4. **Activate the Virtual Environment**:
    - On Windows:
      ```bash
      venv\Scripts\activate
@@ -54,17 +58,12 @@
      source venv/bin/activate
      ```
 
-4. **Install Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
 5. **Configuration**:
    Create a `.env` file in the root directory and configure the necessary environment variables. Refer to `.env.example` for a sample configuration.
 
 6. **Run the Server**:
    ```bash
-   python app.py
+   python manage.py runserver
    ```
 
 7. **Database Migration**:
