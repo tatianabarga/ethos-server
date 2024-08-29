@@ -49,9 +49,11 @@
 
 3. **Install these third-party packages for use in your project**:
 
-    ```bashpipenv install django=='4.1.3' autopep8=='2.0.0' pylint=='2.15.5' djangorestframework=='3.14.0' django-cors-headers=='3.13.0' pylint-django=='2.5.3'```
+    ```bash
+   pipenv install django=='4.1.3' autopep8=='2.0.0' pylint=='2.15.5' djangorestframework=='3.14.0' django-cors-headers=='3.13.0' pylint-django=='2.5.3'
+    ```
 
-4. **Activate the Virtual Environment**:
+5. **Activate the Virtual Environment**:
    - On Windows:
      ```bash
      venv\Scripts\activate
@@ -61,15 +63,15 @@
      source venv/bin/activate
      ```
 
-5. **Configuration**:
+6. **Configuration**:
    Create a `.env` file in the root directory and configure the necessary environment variables. Refer to `.env.example` for a sample configuration.
 
-6. **Run the Server**:
+7. **Run the Server**:
    ```bash
    python manage.py runserver
    ```
 
-7. **Database Migration**:
+8. **Database Migration**:
    Set up the database by running the migration scripts:
    ```bash
    python manage.py migrate
