@@ -14,6 +14,10 @@
 
 - **Circles**: Organize profiles into 'circles,' allowing shared access and collaboration on profiles and logs.
 
+## User Description
+- Use Case: Corporate users leverage Ethos to track and evaluate their experiences with contractors and service providers. By documenting and reviewing feedback, they can make informed decisions on whether to continue working with these entities or select new ones.
+- Use Case: Individual users utilize Ethos to monitor and assess the actions and policies of corporations and politicians. By keeping detailed records of their experiences and observations, they can better decide which organizations and leaders align with their values and which ones to avoid. This empowers them to support ethical and responsible entities, contributing to more informed civic and consumer choices.
+
 
 ## Links and Resources
 - project board: https://github.com/users/tatianabarga/projects/5/views/1?pane=issue&itemId=70796528
