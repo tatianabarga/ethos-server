@@ -33,4 +33,13 @@ class ProfileTests(APITestCase):
       self.assertEqual(Profile.objects.get(id=response.data['id']).bio, "Test Bio")
       self.assertEqual(CircleProfile.objects.filter(profile=response.data['id']).count(), 2)
       self.assertEqual(Score.objects.last().score, "10")
+      
+      def test_retrieve_profile(self):
+        url = f'profiles/{self.profile.id}'
+        response = self.client.get(url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], self.profile.name)
+        self.assertEqual(len(response.data['circles']), 2)
+
 
