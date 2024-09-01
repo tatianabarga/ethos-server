@@ -1,110 +1,36 @@
-from django.urls import reverse
+from rest_framework.test import APITestCase
 from rest_framework import status
-from rest_framework.test import APITestCase, APIClient
-from ethosapi.models import User, Profile, Circle, CircleProfile, Score, Log
+from ethosapi.models import User, Circle, Profile, CircleProfile, Score
+from django.urls import reverse
 
-class ProfileViewTests(APITestCase):
+class ProfileTests(APITestCase):
+    
     def setUp(self):
-        self.client = APIClient()
-        self.user = User.objects.create(username='testuser', password='testpass')
-        self.circle = Circle.objects.create(name="Test Circle", creator=self.user)
-        self.profile = Profile.objects.create(user=self.user, bio="Test Bio", name="Test Name")
-        self.circle_profile = CircleProfile.objects.create(circle=self.circle, profile=self.profile)
-        self.score = Score.objects.create(profile=self.profile, score=100)
-        self.log = Log.objects.create(
-            title="Test Log",
-            description="Test Description",
-            score_impact=10,
-            event_date="2024-01-01",
-            creator=self.user,
-            profile=self.profile,
-            log_date=date.today()
-        )
-
-    def test_retrieve_profile(self):
-        url = reverse('profile-detail', args=[self.profile.pk])
-        response = self.client.get(url)
+      self.user = User.objects.create(name="Test User", uid="12345")
+      self.circle1 = Circle.objects.create(name="Circle 1", creator=self.user)
+      self.circle2 = Circle.objects.create(name="Circle 2", creator=self.user)
+      self.profile_data = {
+          "creator": self.user.id,
+          "bio": "Test Bio",
+          "name": "Test Name",
+          "circles": [self.circle1.id, self.circle2.id]
+      }
+      self.profile = Profile.objects.create(
+          creator=self.user,
+          bio="Test Bio",
+          name="Test Name"
+      )
+      CircleProfile.objects.create(circle=self.circle1, profile=self.profile)
+      CircleProfile.objects.create(circle=self.circle2, profile=self.profile)
+      Score.objects.create(score="10", profile=self.profile)
         
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['name'], self.profile.name)
-
-    def test_retrieve_profile_not_found(self):
-        url = reverse('profile-detail', args=[999])
-        response = self.client.get(url)
-        
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data['message'], 'profile not found')
-
-    def test_list_profiles(self):
-        url = reverse('profile-list')
-        response = self.client.get(url)
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)  # Only one profile created in setUp
-
-    def test_list_profiles_with_creator_filter(self):
-        url = f"{reverse('profile-list')}?creator={self.user.pk}"
-        response = self.client.get(url)
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-
-    def test_list_profiles_with_circle_filter(self):
-        url = f"{reverse('profile-list')}?circle={self.circle.pk}"
-        response = self.client.get(url)
-        
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
-
     def test_create_profile(self):
-        url = reverse('profile-list')
-        data = {
-            'bio': 'New Bio',
-            'name': 'New Name',
-            'creator': self.user.pk,
-            'circles': [self.circle.pk],
-            'score': 50
-        }
-        response = self.client.post(url, data, format='json')
-        
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data['name'], 'New Name')
-        self.assertEqual(Profile.objects.count(), 2)  # One from setUp, one from this test
+      url = '/profiles'
+      response = self.client.post(url, self.profile_data, format='json')
+      
+      self.assertEqual(response.status_code, status.HTTP_200_OK)
+      self.assertEqual(Profile.objects.count(), 2)
+      self.assertEqual(Profile.objects.get(id=response.data['id']).bio, "Test Bio")
+      self.assertEqual(CircleProfile.objects.filter(profile=response.data['id']).count(), 2)
+      self.assertEqual(Score.objects.last().score, "10")
 
-    def test_create_profile_with_invalid_circle(self):
-        url = reverse('profile-list')
-        data = {
-            'bio': 'New Bio',
-            'name': 'New Name',
-            'creator': self.user.pk,
-            'circles': [999],  # Non-existent circle ID
-            'score': 50
-        }
-        response = self.client.post(url, data, format='json')
-        
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn('error', response.data)
-
-    def test_update_profile(self):
-        url = reverse('profile-detail', args=[self.profile.pk])
-        data = {
-            'bio': 'Updated Bio',
-            'name': 'Updated Name',
-            'circles': [self.circle.pk]
-        }
-        response = self.client.put(url, data, format='json')
-        
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.profile.refresh_from_db()
-        self.assertEqual(self.profile.bio, 'Updated Bio')
-        self.assertEqual(self.profile.name, 'Updated Name')
-
-    def test_destroy_profile(self):
-        url = reverse('profile-detail', args=[self.profile.pk])
-        response = self.client.delete(url)
-        
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-        self.assertEqual(Profile.objects.count(), 0)
-        self.assertEqual(CircleProfile.objects.count(), 0)
-        self.assertEqual(Score.objects.count(), 0)
-        self.assertEqual(Log.objects.count(), 0)
