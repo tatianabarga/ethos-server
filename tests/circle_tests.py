@@ -33,3 +33,14 @@ class CircleTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+    def test_update_circle(self):
+        url = f'/circles/{self.circle.id}'
+        data = {
+            "name": "Updated Circle"
+        }
+        response = self.client.put(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        updated_circle = Circle.objects.get(id=self.circle.id)
+        self.assertEqual(updated_circle.name, "Updated Circle")
