@@ -56,3 +56,12 @@ class ProfileTests(APITestCase):
         self.assertEqual(updated_profile.bio, "Updated Bio")
         self.assertEqual(updated_profile.name, "Updated Name")
         self.assertEqual(CircleProfile.objects.filter(profile=updated_profile).count(), 1)
+
+    def test_delete_profile(self):
+        url = f'/profiles/{self.profile.id}'
+        response = self.client.delete(url)
+        
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Profile.objects.count(), 0)
+        self.assertEqual(CircleProfile.objects.filter(profile=self.profile.id).count(), 0)
+        self.assertEqual(Score.objects.filter(profile=self.profile.id).count(), 0)
