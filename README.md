@@ -25,6 +25,7 @@
 - [project board](https://github.com/users/tatianabarga/projects/5/views/1?pane=issue&itemId=70796528)
 - [postman documentation](https://documenter.getpostman.com/view/30237001/2sAXjJ4s76)
 - [ERD](https://drawsql.app/teams/tatiana-bargas-team/diagrams/ethos)
+- [Loom video walk through](https://www.loom.com/share/52a9056289e348a79fcf96eaf5416639?sid=04c32c2b-b1b9-40a2-bd8b-0df3e458f4fa)
 
 
 ## Tech Stack
