@@ -12,7 +12,6 @@ class LogTests(APITestCase):
         self.log = Log.objects.create(
             creator=self.user,
             profile=self.profile,
-            score_impact="Positive",
             title="Test Title",
             description="Test Description",
             event_date=date.today()
