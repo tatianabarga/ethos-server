@@ -18,3 +18,11 @@ class UserTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(User.objects.count(), 2)
         self.assertEqual(User.objects.get(id=response.data['id']).name, "New User")
+        
+    def test_retrieve_user(self):
+        url = f'/users/{self.user.id}'
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], self.user.name)
+
