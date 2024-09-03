@@ -19,3 +19,10 @@ class CircleTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Circle.objects.count(), 2)
         self.assertEqual(Circle.objects.get(id=response.data['id']).name, "New Circle")
+
+    def test_retrieve_circle(self):
+        url = f'/circles/{self.circle.id}'
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['name'], self.circle.name)
