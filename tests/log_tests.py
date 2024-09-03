@@ -33,4 +33,12 @@ class LogTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Log.objects.count(), 2)
         self.assertEqual(Log.objects.get(id=response.data['id']).title, "New Log")
+        
+    def test_retrieve_log(self):
+        url = f'/logs/{self.log.id}'
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['title'], self.log.title)
+
 
