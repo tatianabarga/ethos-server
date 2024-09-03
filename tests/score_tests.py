@@ -21,3 +21,11 @@ class ScoreTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Score.objects.count(), 2)
         self.assertEqual(Score.objects.get(id=response.data['id']).score, "200")
+        
+    def test_retrieve_score(self):
+        url = f'/scores/{self.score.id}'
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['score'], self.score.score)
+
