@@ -36,3 +36,12 @@ class ScoreTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
 
+    def test_update_score(self):
+        url = f'/scores/{self.score.id}'
+        data = {
+            "score": "300"
+        }
+        response = self.client.put(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Score.objects.get(id=self.score.id).score, "300")
