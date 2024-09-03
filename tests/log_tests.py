@@ -12,7 +12,25 @@ class LogTests(APITestCase):
         self.log = Log.objects.create(
             creator=self.user,
             profile=self.profile,
+            score_impact="Positive",
             title="Test Title",
             description="Test Description",
             event_date=date.today()
         )
+        
+    def test_create_log(self):
+        url = f'/logs'
+        data = {
+            "creator": self.user.id,
+            "profile": self.profile.id,
+            "score_impact": "Negative",
+            "title": "New Log",
+            "description": "New Description",
+            "event_date": "2024-09-01"
+        }
+        response = self.client.post(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Log.objects.count(), 2)
+        self.assertEqual(Log.objects.get(id=response.data['id']).title, "New Log")
+
