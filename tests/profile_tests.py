@@ -42,4 +42,17 @@ class ProfileTests(APITestCase):
       self.assertEqual(response.data['name'], self.profile.name)
       self.assertEqual(len(response.data['circles']), 2)
 
-
+    def test_update_profile(self):
+        update_data = {
+            "bio": "Updated Bio",
+            "name": "Updated Name",
+            "circles": [self.circle1.id]  # Remove one circle
+        }
+        url = f'/profiles/{self.profile.id}'
+        response = self.client.put(url, update_data, format='json')
+        
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        updated_profile = Profile.objects.get(id=self.profile.id)
+        self.assertEqual(updated_profile.bio, "Updated Bio")
+        self.assertEqual(updated_profile.name, "Updated Name")
+        self.assertEqual(CircleProfile.objects.filter(profile=updated_profile).count(), 1)
