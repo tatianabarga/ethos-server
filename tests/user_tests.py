@@ -32,3 +32,15 @@ class UserTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+        
+    def test_update_user(self):
+        url = f'/users/{self.user.id}'
+        data = {
+            "name": "Updated User"
+        }
+        response = self.client.put(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        updated_user = User.objects.get(id=self.user.id)
+        self.assertEqual(updated_user.name, "Updated User")
+
