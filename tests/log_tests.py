@@ -48,4 +48,18 @@ class LogTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
 
+    def test_update_log(self):
+        url = f'/logs/{self.log.id}'
+        data = {
+            "title": "Updated Title",
+            "description": "Updated Description",
+            "score_impact": "Neutral"
+        }
+        response = self.client.put(url, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        updated_log = Log.objects.get(id=self.log.id)
+        self.assertEqual(updated_log.title, "Updated Title")
+        self.assertEqual(updated_log.description, "Updated Description")
+        self.assertEqual(updated_log.score_impact, "Neutral")
 
