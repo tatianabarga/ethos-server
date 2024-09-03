@@ -44,3 +44,10 @@ class CircleTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         updated_circle = Circle.objects.get(id=self.circle.id)
         self.assertEqual(updated_circle.name, "Updated Circle")
+
+    def test_delete_circle(self):
+        url = f'/circles/{self.circle.id}'
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Circle.objects.count(), 0)
