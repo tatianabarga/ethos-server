@@ -28,4 +28,11 @@ class ScoreTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['score'], self.score.score)
+        
+    def test_list_scores(self):
+        url = f'/scores'
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
 
