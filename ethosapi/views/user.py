@@ -31,7 +31,7 @@ class UserView(ViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)   
         
 
-    def update(self, request, pk): # TODO: test this
+    def update(self, request, pk):
         user = User.objects.get(pk=pk)
         user.name = request.data.get("name", user.name)
         user.save()
@@ -64,5 +64,5 @@ class UserView(ViewSet):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'uid', 'circles']
+        fields = '__all__'
         depth = 2

@@ -1,7 +1,6 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 from ethosapi.models import User, Profile, Score
-from django.urls import reverse
 
 class ScoreTests(APITestCase):
 
