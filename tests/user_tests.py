@@ -44,3 +44,9 @@ class UserTests(APITestCase):
         updated_user = User.objects.get(id=self.user.id)
         self.assertEqual(updated_user.name, "Updated User")
 
+    def test_delete_user(self):
+        url = f'/users/{self.user.id}'
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(User.objects.count(), 0)
