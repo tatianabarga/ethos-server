@@ -40,5 +40,12 @@ class LogTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['title'], self.log.title)
+        
+    def test_list_logs(self):
+        url = '/logs'
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
 
 
