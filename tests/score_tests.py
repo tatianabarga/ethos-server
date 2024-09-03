@@ -45,3 +45,11 @@ class ScoreTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Score.objects.get(id=self.score.id).score, "300")
+        
+    def test_delete_score(self):
+        url = f'/scores/{self.score.id}'
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(Score.objects.count(), 0)
+
