@@ -11,5 +11,5 @@ class Log(models.Model):
   score_impact = models.CharField(max_length=50)
   title = models.CharField(max_length=50)
   description = models.CharField(max_length=50)
-  event_date = models.DateField(auto_now=True)
+  event_date = models.CharField(max_length=50)
   log_date = models.DateField(auto_now=True)
