@@ -1,9 +1,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from ethosapi.models import Log
-from ethosapi.models import User
-from ethosapi.models import Profile
+from ethosapi.models import Log, User, Profile, Score
 from datetime import date
 
 class LogView(ViewSet):
@@ -47,6 +45,25 @@ class LogView(ViewSet):
             log_date = current_date,
         )
         serializer = LogSerializer(log)
+        
+        # Update the associated Score
+        try:
+            # Retrieve the score for the profile
+            score = Score.objects.get(profile_id=profile.id) # might need to just be profile not profile.id
+        except Score.DoesNotExist:
+            # If no score exists for the profile, create a new one
+            score = Score.objects.create(profile=profile, score=0)
+            
+
+        # Calculate the new score
+        old_score = int(score.score)
+        score_impact = int(request.data["score_impact"])
+        new_score = old_score + score_impact
+
+        # Update the Score object and save
+        score.score = new_score
+        score.save()
+        
         return Response(serializer.data)
     
     def update(self, request, pk):
