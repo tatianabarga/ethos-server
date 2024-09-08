@@ -76,7 +76,18 @@ class LogView(ViewSet):
         log = Log.objects.get(pk=pk)
         log.title = request.data["title"]
         log.description = request.data["description"]
+        
+        profile_id = log.profile.id
+        
+        old_score_impact = int(log.score_impact)
+        new_score_impact = int(request.data["score_impact"])
+        score = Score.objects.get(profile_id=profile_id)
+        
+        score.score = (int(score.score) - old_score_impact) + new_score_impact
+        score.save()
+        
         log.score_impact = request.data["score_impact"]
+        
         log.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)    
