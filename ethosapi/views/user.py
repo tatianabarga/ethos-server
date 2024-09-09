@@ -17,6 +17,10 @@ class UserView(ViewSet):
     def list(self, request):
         users = User.objects.all()
                
+        circle = request.query_params.get('circle', None)
+        if circle is not None:
+            users =  users.filter(circleuser__circle_id=circle)
+            
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)  
          
