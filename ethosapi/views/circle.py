@@ -37,14 +37,25 @@ class CircleView(ViewSet):
         Returns
             Response -- JSON serialized game instance
         """
-        creator = User.objects.get(pk=request.data["creator"])
-        print(creator.name)
-        
         serializer = CircleSerializer(data=request.data)
         
+        creator = User.objects.get(pk=request.data["creator"])
         
         if serializer.is_valid():
             circle = serializer.save()
+            users = request.data.get('users', [])
+            if not isinstance(users, list):
+                users = [users]
+            for user_id in users:
+                try:
+                    user = User.objects.get(pk=user_id)
+                    CircleUser.objects.create(
+                        circle = circle,
+                        user = user,
+                    ) 
+                except User.DoesNotExist:
+                    return Response({'error': f'user with id {user_id} does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+            
             return Response(serializer.data)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -92,4 +103,4 @@ class CircleView(ViewSet):
 class CircleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Circle
-        fields = ('id', 'creator', 'name')
+        fields = '__all__'
