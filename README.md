@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Ethos** is an application designed to track and evaluate experiences and opinions related to corporations, politicians, contractors, individuals, and more. It provides users with a versatile platform to manage and share feedback, aiding in informed decision-making and transparency.
+**Ethos** is a full-stack web application designed to track and evaluate experiences and opinions related to corporations, politicians, contractors, individuals, and more. It provides users with a versatile platform to manage and share feedback, aiding in informed decision-making and transparency.
 
 
 ## Features
@@ -22,9 +22,12 @@
 
 
 ## Links and Resources
+- Deployed Project coming soon!
 - [project board](https://github.com/users/tatianabarga/projects/5/views/1?pane=issue&itemId=70796528)
 - [postman documentation](https://documenter.getpostman.com/view/30237001/2sAXjJ4s76)
 - [ERD](https://drawsql.app/teams/tatiana-bargas-team/diagrams/ethos)
+- [Wireframe](https://www.figma.com/design/OV8zg11xjindtsnKR8iW9k/Ethos?node-id=0-1&t=LpJ6Ndp5CZLbxgIk-0)
+- [Client-Side repository](https://github.com/tatianabarga/ethos-client)
 
 
 ## Tech Stack
