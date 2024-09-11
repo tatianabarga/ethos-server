@@ -69,6 +69,26 @@ class CircleView(ViewSet):
 
         circle = Circle.objects.get(pk=pk)
         circle.name = request.data["name"]
+        
+        joins = CircleUser.objects.filter(circle_id=pk)
+        old_user_ids = joins.values_list('user_id', flat=True)
+        new_users = request.data["users"]
+        
+        if old_user_ids != new_users: # if the circles field has changed
+            for user in old_user_ids: # find any deleted circles
+                if user not in new_users:
+                    # pull instance from join table and delete 
+                    joins.filter(user_id=user).delete()
+                
+            for user in new_users: # find any added circles
+                if user not in old_user_ids:
+                    # create instance in join table 
+                    new_user = User.objects.get(pk=user)
+                    CircleUser.objects.create(
+                        user = new_user,
+                        circle = circle,
+                    ) 
+                    
         circle.save()
 
         return Response(None, status=status.HTTP_204_NO_CONTENT)
