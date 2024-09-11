@@ -111,20 +111,12 @@ class ProfileView(ViewSet):
         return Response(None, status=status.HTTP_204_NO_CONTENT)
     
     def destroy(self, request, pk):
-        profile = Profile.objects.get(pk=pk)
-        
-        score = Score.objects.get(profile=pk)
-        score.delete() # delete score
-        
-        joins = CircleProfile.objects.all()
-        joins = joins.filter(profile_id=pk)
-        joins.delete()# delete joins for profile from circleprofile table
-        
-        logs = Log.objects.all()
-        logs = logs.filter(profile_id=pk)
-        logs.delete() # delete logs for profile
-        
-        profile.delete() #delete profile itself
+        try:
+            profile = Profile.objects.get(pk=pk)
+        except Profile.DoesNotExist:
+            return Response({'error': 'Profile not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        profile.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
