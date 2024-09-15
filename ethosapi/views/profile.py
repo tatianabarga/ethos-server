@@ -22,7 +22,7 @@ class ProfileView(ViewSet):
         
         creator_id = request.query_params.get('creator', None)
         if creator_id is not None:
-            profiles =  Profile.objects.filter(creator=creator_id)
+            profiles =  Profile.objects.filter(creator_id=creator_id)
       
         circle = request.query_params.get('circle', None)
         if circle is not None:
