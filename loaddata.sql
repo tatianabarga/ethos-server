@@ -17,8 +17,34 @@ CREATE TABLE circle (
 
 ALTER TABLE circle RENAME TO ethosapi_circle;
 
-DELETE FROM ethosapi_circleuser
-WHERE id = 2;
+DELETE FROM ethosapi_user
+WHERE id = 10;
+
+DELETE FROM ethosapi_circle
+WHERE id = 28;
+
+DELETE FROM ethosapi_circle;
+
+-- Insert into ethosapi_profile without any circle connections
+INSERT INTO ethosapi_profile (creator_id, bio, name)
+VALUES
+(2, 'Experienced Roofing contractor', 'Bobs Roofing'),
+(2, 'Expert in construction', 'You Need We Build'),
+(3, 'Freelance electrician', 'Zappies Electric'),
+(4, 'Plumbing specialist', 'The Pipe Guys'),
+(5, 'Roofing expert', 'Gretta Roofs');
+
+-- Insert into ethosapi_user to mimic company employees
+INSERT INTO ethosapi_user (name, uid)
+VALUES
+('Alice Johnson', 'emp001'),
+('Bob Smith', 'emp002'),
+('Charlie Davis', 'emp003'),
+('Dana Lee', 'emp004'),
+('Evan Garcia', 'emp005');
+
+
+
 
 
 
