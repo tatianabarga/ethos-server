@@ -10,6 +10,10 @@ pylint = "==2.15.5"
 djangorestframework = "==3.14.0"
 django-cors-headers = "==3.13.0"
 pylint-django = "==2.5.3"
+django-environ = "*"
+dj-database-url = "*"
+psycopg2 = "*"
+whitenoise = "*"
 
 [dev-packages]
 
