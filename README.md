@@ -22,7 +22,8 @@
 
 
 ## Links and Resources
-- Deployed Project coming soon!
+- [deployed project](https://ethos-client.netlify.app)
+- [deployed backend](https://ethosapi-182a09cd49d6.herokuapp.com/)
 - [project board](https://github.com/users/tatianabarga/projects/5/views/1?pane=issue&itemId=70796528)
 - [postman documentation](https://documenter.getpostman.com/view/30237001/2sAXjJ4s76)
 - [ERD](https://drawsql.app/teams/tatiana-bargas-team/diagrams/ethos)
