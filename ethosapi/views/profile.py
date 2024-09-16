@@ -45,7 +45,7 @@ class ProfileView(ViewSet):
         if serializer.is_valid():
             profile = serializer.save()
             circles = request.data.get('circles', [])
-            score = request.data.get('score', None)
+            score = request.data.get('initial_score', None)
             if not isinstance(circles, list):
                 circles = [circles]
                 
@@ -124,4 +124,4 @@ class ProfileView(ViewSet):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('id', 'creator', 'bio', 'name', 'circles')
+        fields = '__all__'
