@@ -8,12 +8,19 @@
 ## Features
 
 - **Profile Management**: Create and manage profiles for entities such as contractors, corporations, and individuals.
+<img width="1043" alt="profile form" src="/utils/images/profileform.PNG">
+<img width="1043" alt="profile" src="utils/images/singleprofile.PNG">
   
 - **Ethos Score**: Each profile includes an Ethos Score updated based on user feedback.
+<img width="1043" alt="profile view" src="utils/images/profileview.PNG">
 
 - **Experience Logging**: Document experiences with profiles, including descriptions, dates, and score impacts.
+<img width="1043" alt="log form" src="utils/images/logform.PNG">
+<img width="1043" alt="log" src="utils/images/singlelog.PNG">
 
 - **Circles**: Organize profiles into 'circles,' allowing shared access and collaboration on profiles and logs.
+<img width="1043" alt="circle" src="utils/images/singlecircle.PNG">
+<img width="1043" alt="circle view" src="utils/images/circlesview.PNG">
 
 
 ## User Description
