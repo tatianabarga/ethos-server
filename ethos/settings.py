@@ -32,10 +32,6 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 # You might have to add this entire variable if you're starting from scratch
 CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 
 # Application definition
