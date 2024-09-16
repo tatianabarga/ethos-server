@@ -96,4 +96,4 @@ class LogView(ViewSet):
 class LogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Log
-        fields = ('id', 'creator', 'title', 'description', 'event_date', 'profile', 'score_impact')
+        fields = ('id', 'creator', 'title', 'description', 'event_date', 'profile', 'score_impact', 'log_date')
