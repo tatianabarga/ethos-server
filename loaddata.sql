@@ -20,8 +20,8 @@ ALTER TABLE circle RENAME TO ethosapi_circle;
 DELETE FROM ethosapi_user
 WHERE id = 10;
 
-DELETE FROM ethosapi_circle
-WHERE id = 28;
+DELETE FROM ethosapi_log
+WHERE id = 30;
 
 DELETE FROM ethosapi_circle;
 
@@ -44,6 +44,11 @@ VALUES
 ('Evan Garcia', 'emp005');
 
 
+
+UPDATE ethosapi_score
+SET 
+    score = 12
+WHERE id = 14;
 
 
 

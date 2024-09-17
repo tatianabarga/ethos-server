@@ -19,6 +19,7 @@
 <img width="1043" alt="log" src="utils/images/singlelog.PNG">
 
 - **Circles**: Organize profiles into 'circles,' allowing shared access and collaboration on profiles and logs.
+<img width="1043" alt="circle form" src="utils/images/circleform.PNG">
 <img width="1043" alt="circle" src="utils/images/singlecircle.PNG">
 <img width="1043" alt="circle view" src="utils/images/circlesview.PNG">
 
