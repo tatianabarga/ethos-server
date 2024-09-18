@@ -5,6 +5,16 @@
 **Ethos** is a full-stack web application designed to track and evaluate experiences and opinions related to corporations, politicians, contractors, individuals, and more. It provides users with a versatile platform to manage and share feedback, aiding in informed decision-making and transparency.
 
 
+## Links and Resources
+- [deployed project](https://ethos-client.netlify.app)
+- [Video Walkthrough](https://www.loom.com/share/b4c42977a3704dd89b46817786824a8d?sid=b9f045e6-a44f-4cc4-a825-bda84029dc84)
+- [deployed backend](https://ethosapi-182a09cd49d6.herokuapp.com/)
+- [project board](https://github.com/users/tatianabarga/projects/5/views/1?pane=issue&itemId=70796528)
+- [postman documentation](https://documenter.getpostman.com/view/30237001/2sAXjJ4s76)
+- [ERD](https://drawsql.app/teams/tatiana-bargas-team/diagrams/ethos)
+- [Wireframe](https://www.figma.com/design/OV8zg11xjindtsnKR8iW9k/Ethos?node-id=0-1&t=LpJ6Ndp5CZLbxgIk-0)
+- [Client-Side repository](https://github.com/tatianabarga/ethos-client)
+
 ## Features
 
 - **Profile Management**: Create and manage profiles for entities such as contractors, corporations, and individuals.
@@ -27,16 +37,6 @@
 ## User Description
 - Use Case: Corporate users leverage Ethos to track and evaluate their experiences with contractors and service providers. By documenting and reviewing feedback, they can make informed decisions on whether to continue working with these entities or select new ones.
 - Use Case: Individual users utilize Ethos to monitor and assess the actions and policies of corporations and politicians. By keeping detailed records of their experiences and observations, they can better decide which organizations and leaders align with their values and which ones to avoid. This empowers them to support ethical and responsible entities, contributing to more informed civic and consumer choices.
-
-
-## Links and Resources
-- [deployed project](https://ethos-client.netlify.app)
-- [deployed backend](https://ethosapi-182a09cd49d6.herokuapp.com/)
-- [project board](https://github.com/users/tatianabarga/projects/5/views/1?pane=issue&itemId=70796528)
-- [postman documentation](https://documenter.getpostman.com/view/30237001/2sAXjJ4s76)
-- [ERD](https://drawsql.app/teams/tatiana-bargas-team/diagrams/ethos)
-- [Wireframe](https://www.figma.com/design/OV8zg11xjindtsnKR8iW9k/Ethos?node-id=0-1&t=LpJ6Ndp5CZLbxgIk-0)
-- [Client-Side repository](https://github.com/tatianabarga/ethos-client)
 
 
 ## Tech Stack
